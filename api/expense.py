@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 
 # Connect Flask to database
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///students.sqlite3'
+app.config['SQLALCHEMY_DATABASE_URI'] = '???'
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 # Attach Flask app to database
