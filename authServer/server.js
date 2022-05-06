@@ -16,12 +16,25 @@ app.use(
   })
 );
 
+const getUserCount = async () => {
+  const db = getDb();
+  const result = await db
+    .collection("counter")
+    .findOneAndUpdate(
+      { id: "users" },
+      { $inc: { current: 1 } },
+      { returnOriginal: false }
+    );
+  return result.value.current;
+};
+
 app.post("/register", async (req, res) => {
   const db = getDb();
   try {
     // bcrypt password  before storing newUser in db
+    const id = await getUserCount();
     const hashedPassword = await bcrypt.hash(req.body.password, 10);
-    const newUser = { ...req.body, password: hashedPassword };
+    const newUser = { ...req.body, id, password: hashedPassword };
     await db.collection("users").insertOne(newUser);
     const user = await db
       .collection("users")
